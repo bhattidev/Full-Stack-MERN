@@ -1,9 +1,15 @@
+import { Outlet } from 'react-router';
 import './App.css';
+import Navbar from './components/Navbar';
 
 function App() {
 	return (
 		<>
-			<h1 className="text-3xl font-bold underline ">Hello world!</h1>
+			<Navbar />
+			<main className="min-h-screen max-w-7xl mx-auto px-4 py-6 font-primaryFont">
+				<Outlet />
+			</main>
+			<footer>Footer</footer>
 		</>
 	);
 }
