@@ -2,8 +2,16 @@ import React from 'react';
 import { FiShoppingCart } from 'react-icons/fi';
 import { getImgUrl } from '../../utils/getImgUrl';
 import { Link } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { addToCart } from '../../redux/features/cart/cartSlice'; // Adjusted import
 
 const BookCart = ({ book }) => {
+	const dispatch = useDispatch();
+
+	const handleAddToCart = (product) => {
+		dispatch(addToCart(product)); // Corrected dispatch
+	};
+
 	return (
 		<div className="rounded-lg transition-shadow duration-300">
 			<div className="flex flex-col md:flex-row gap-4">
@@ -24,7 +32,7 @@ const BookCart = ({ book }) => {
 
 				{/* Book Info */}
 				<div className="flex flex-col justify-between">
-					<div className="">
+					<div>
 						<Link to={`/books/${book._id}`}>
 							<h3 className="text-xl font-semibold hover:text-blue-600 mb-3">
 								{book.title}
@@ -32,21 +40,25 @@ const BookCart = ({ book }) => {
 						</Link>
 						<p className="text-gray-600 mb-5 overflow-hidden">
 							{book.description.length > 70
-								? `${book.description.slice(40)}...`
+								? `${book.description.slice(0, 70)}...`
 								: book.description || 'Book Description'}
 						</p>
 					</div>
 
-					<div className="">
+					<div>
 						<p className="font-medium mb-3">
-							{book?.newPrice}
-							<span className="line-through font-normal ml-2">
-								${book?.oldPrice}
-							</span>
+							${book?.newPrice.toFixed(2)}
+							{book?.oldPrice && (
+								<span className="line-through font-normal ml-2">
+									${book.oldPrice.toFixed(2)}
+								</span>
+							)}
 						</p>
 
 						{/* Add to Cart Button */}
-						<button className="btn-secondary flex items-center gap-1 text-nowrap overflow-hidden">
+						<button
+							onClick={() => handleAddToCart(book)}
+							className="btn-secondary flex items-center gap-1 text-nowrap overflow-hidden">
 							<FiShoppingCart />
 							<span>Add to Cart</span>
 						</button>
