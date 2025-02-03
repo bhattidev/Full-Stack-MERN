@@ -73,6 +73,21 @@
 	color: white;
 }
 
+.btn-secondary {
+	background-color: var(--primary);
+	padding: 0.5rem 1rem;
+	border-radius: 0.375rem;
+	font-size: 1rem;
+	font-family: var(--secondary-font);
+	font-weight: bold;
+	transition: all 0.2s ease-in-out;
+	cursor: pointer;
+}
+.btn-secondary:hover {
+	background-color: var(--secondary);
+	color: white;
+}
+
 .html {
 	scroll-behavior: smooth;
 }
