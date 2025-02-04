@@ -1,4 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
+import Swal from 'sweetalert2';
 
 const initialState = {
 	cartItems: [],
@@ -14,11 +15,33 @@ const cartSlice = createSlice({
 			);
 			if (!existingItem) {
 				state.cartItems.push(action.payload);
-				alert('Item added successfully');
+				Swal.fire({
+					position: 'top-end',
+					showConfirmButton: 'false',
+					timer: '1500',
+					title: 'Product Added to Cart',
+					icon: 'success',
+				});
 			} else {
-				alert('Item already exists');
+				Swal.fire({
+					title: 'Already Added to the Cart',
+					text: "You wan't be able to revert this!",
+					icon: 'warning',
+					showCancelButton: true,
+					confirmButtonColor: '#3085d6',
+					cancelButtonColor: '#d33',
+					confirmButtonText: 'Ok',
+				});
 			}
 		},
+	},
+	removeFromCart: (state, action) => {
+		state.cartItems = state.cartItems.filter(
+			(item) => item._id !== action.payload._id
+		);
+	},
+	clearCart: (state) => {
+		state.cartItems = [];
 	},
 });
 // export the actions
